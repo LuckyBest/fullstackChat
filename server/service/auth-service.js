@@ -1,5 +1,5 @@
 import UserModel from "../models/user-model.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import TokenService from "./token-service.js";
 import { UserDto } from "../dtos/user-dto.js";
 import { ApiError } from "../exceptions/api-error.js";
