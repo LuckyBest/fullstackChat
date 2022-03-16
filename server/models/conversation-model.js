@@ -5,6 +5,9 @@ const ConversationModel = new mongoose.Schema(
     members: {
       type: Array,
     },
+    socketId: {
+      type: String,
+    }
   },
   {
     timestamps: true,

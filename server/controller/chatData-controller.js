@@ -14,7 +14,8 @@ export class ChatDataController {
     try {
       const conversation = await ChatDataService.createConversation(
         req.body.senderId,
-        req.body.receiverId
+        req.body.receiverId,
+        req.body.socketId
       );
       res.status(200).json(conversation);
     } catch (e) {
@@ -52,11 +53,17 @@ export class ChatDataController {
   }
 
   async getMessages(req, res, next) {
-    const { conversationId } = req.params;
+    const { conversationId } = req.params;  
+    const { count, page } = req.query;
+    const amountDataToSkip = count * (page - 1);
+
     try {
       const allMessagesData = await ChatDataService.getAllMessages(
-        conversationId
+        conversationId,
+        count,
+        amountDataToSkip
       );
+
       res.status(200).json(allMessagesData);
     } catch (e) {
       console.log(e);

@@ -8,9 +8,10 @@ class ChatDataService {
     return users;
   }
 
-  async createConversation(senderId, receiverId) {
+  async createConversation(senderId, receiverId, socketId) {
     const conversation = await ConversationModel.create({
       members: [senderId, receiverId],
+      socketId
     });
     return conversation;
   }
@@ -29,10 +30,15 @@ class ChatDataService {
     return message;
   }
 
-  async getAllMessages(conversationId) {
-    const messages = await MessageModel.find({ conversationId });
+  async getAllMessages(conversationId, count, amountDataToSkip) {
+
+    const messages = await MessageModel.find({ conversationId })
+      .sort({ $natural:-1 })
+        .limit(count)
+          .skip(amountDataToSkip);
+        
     return messages;
   }
-}
+}   
 
 export default new ChatDataService();
